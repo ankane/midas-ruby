@@ -91,7 +91,7 @@ Everyone is encouraged to help improve this project. Here are a few ways you can
 To get started with development:
 
 ```sh
-git clone https://github.com/ankane/midas.git
+git clone --recursive https://github.com/ankane/midas.git
 cd midas
 bundle install
 bundle exec rake compile
