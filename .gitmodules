@@ -1,0 +1,3 @@
+[submodule "vendor/MIDAS"]
+	path = vendor/MIDAS
+	url = https://github.com/bhatiasiddharth/MIDAS
