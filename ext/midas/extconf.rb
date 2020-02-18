@@ -1,7 +1,5 @@
 require "mkmf-rice"
 
-abort "Missing stdc++" unless have_library("stdc++")
-
 $CXXFLAGS << " -std=c++17"
 
 ext = File.expand_path(".", __dir__)
