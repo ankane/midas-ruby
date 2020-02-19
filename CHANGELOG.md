@@ -1,4 +1,4 @@
-## 0.1.1 (unreleased)
+## 0.1.1 (2020-02-19)
 
 - Fixed installation on Linux
 
