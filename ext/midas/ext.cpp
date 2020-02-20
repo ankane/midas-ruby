@@ -1,12 +1,11 @@
-// stdlib
-#include <vector>
-
 // midas
 #include <anom.hpp>
 
 // rice
 #include <rice/Module.hpp>
 #include <rice/String.hpp>
+
+using std::vector;
 
 using Rice::Module;
 using Rice::String;
