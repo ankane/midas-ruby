@@ -14,7 +14,6 @@ Rake::ExtensionTask.new("midas") do |ext|
   ext.lib_dir = "lib/midas"
 end
 
-# include ext in local installs but not releases
 task :remove_ext do
   path = "lib/midas/ext.bundle"
   File.unlink(path) if File.exist?(path)
