@@ -1,5 +1,6 @@
 ## 0.1.2 (unreleased)
 
+- Updated MIDAS to 0.1.0
 - Fixed reading data from files with `directed: false`
 
 ## 0.1.1 (2020-02-19)
