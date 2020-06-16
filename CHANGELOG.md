@@ -1,6 +1,7 @@
-## 0.1.2 (unreleased)
+## 0.2.0 (unreleased)
 
-- Updated MIDAS to 0.1.0
+- Updated MIDAS to 1.0.0
+- Added `seed` option
 - Fixed reading data from files with `directed: false`
 
 ## 0.1.1 (2020-02-19)
