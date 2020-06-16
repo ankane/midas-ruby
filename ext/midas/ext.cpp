@@ -56,7 +56,7 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
     }
   }
   else {
-    while (fscanf(infile, "%d:%d:%d", &s, &d, &t) == 3) {
+    while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
       src.push_back(s);
       dst.push_back(d);
       times.push_back(t);
