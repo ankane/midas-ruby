@@ -72,26 +72,25 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
 std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
   srand(seed);
   size_t n = src.size();
-  std::vector<float> result;
-  result.reserve(n);
+  const auto result = new float[n];
 
   if (!std::isnan(threshold)) {
     MIDAS::FilteringCore midas(num_rows, num_buckets, threshold, factor);
     for (size_t i = 0; i < n; i++) {
-      result.push_back(midas(src[i], dst[i], times[i]));
+      result[i] = midas(src[i], dst[i], times[i]);
     }
   } else if (relations) {
     MIDAS::RelationalCore midas(num_rows, num_buckets, factor);
     for (size_t i = 0; i < n; i++) {
-      result.push_back(midas(src[i], dst[i], times[i]));
+      result[i] = midas(src[i], dst[i], times[i]);
     }
   } else {
     MIDAS::NormalCore midas(num_rows, num_buckets);
     for (size_t i = 0; i < n; i++) {
-      result.push_back(midas(src[i], dst[i], times[i]));
+      result[i] = midas(src[i], dst[i], times[i]);
     }
   }
-  return std::string((char*) result.data(), sizeof(float) / sizeof(char) * result.size());
+  return std::string((char*) result, sizeof(float) / sizeof(char) * n);
 }
 
 extern "C"
