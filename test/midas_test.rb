@@ -12,6 +12,17 @@ class MidasTest < Minitest::Test
     assert_elements_in_delta expected, scores[-5..-1]
   end
 
+  def test_threshold
+    midas = Midas.new(buckets: 1024, threshold: 1e3)
+    scores = midas.fit_predict(data)
+
+    assert_equal [10000], scores.shape
+    expected = [0, 0, 0, 0, 0, 0, 0, 0, 0.005952, 1.005952]
+    assert_elements_in_delta expected, scores[0...10]
+    expected = [631.594849, 696.509277, 764.598450, 835.862366, 910.301086]
+    assert_elements_in_delta expected, scores[-5..-1]
+  end
+
   def test_no_relations
     midas = Midas.new(buckets: 1024, relations: false)
     scores = midas.fit_predict(data)

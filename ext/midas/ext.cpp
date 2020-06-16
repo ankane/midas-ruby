@@ -3,6 +3,7 @@
 #include <vector>
 
 // midas
+#include <FilteringCore.hpp>
 #include <NormalCore.hpp>
 #include <RelationalCore.hpp>
 
@@ -68,13 +69,18 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
   }
 }
 
-std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, bool relations, int seed) {
+std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
   srand(seed);
   size_t n = src.size();
   std::vector<float> result;
   result.reserve(n);
 
-  if (relations) {
+  if (!std::isnan(threshold)) {
+    MIDAS::FilteringCore midas(num_rows, num_buckets, threshold, factor);
+    for (size_t i = 0; i < n; i++) {
+      result.push_back(midas(src[i], dst[i], times[i]));
+    }
+  } else if (relations) {
     MIDAS::RelationalCore midas(num_rows, num_buckets, factor);
     for (size_t i = 0; i < n; i++) {
       result.push_back(midas(src[i], dst[i], times[i]));
@@ -96,16 +102,16 @@ void Init_ext()
   define_class_under(rb_mMidas, "Detector")
     .define_method(
       "_fit_predict_str",
-      *[](std::string input, int num_rows, int num_buckets, float factor, bool relations, bool directed, int seed) {
+      *[](std::string input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_str(src, dst, times, input, directed);
-        return fit_predict(src, dst, times, num_rows, num_buckets, factor, relations, seed);
+        return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
       })
     .define_method(
       "_fit_predict_file",
-      *[](std::string input, int num_rows, int num_buckets, float factor, bool relations, bool directed, int seed) {
+      *[](std::string input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_file(src, dst, times, input, !directed);
-        return fit_predict(src, dst, times, num_rows, num_buckets, factor, relations, seed);
+        return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
       });
 }
