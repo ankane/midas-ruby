@@ -2,6 +2,7 @@
 
 - Updated MIDAS to 1.0.0
 - Added `seed` option
+- Changed default `alpha` to 0.5
 - Fixed reading data from files with `directed: false`
 
 ## 0.1.1 (2020-02-19)
