@@ -14,7 +14,7 @@ using Rice::String;
 using Rice::define_module;
 using Rice::define_class_under;
 
-void load_str(vector<int>& src, vector<int>& dst, vector<int>& times, std::string input, bool directed) {
+void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input, bool directed) {
   int* input_ptr = (int*) input.data();
   size_t n = input.size() / sizeof(int);
 
@@ -39,7 +39,7 @@ void load_str(vector<int>& src, vector<int>& dst, vector<int>& times, std::strin
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
-void load_file(vector<int>& src, vector<int>& dst, vector<int>& times, std::string input_file, bool undirected)
+void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input_file, bool undirected)
 {
   FILE* infile = fopen(input_file.c_str(), "r");
   if (infile == NULL) {
@@ -67,8 +67,8 @@ void load_file(vector<int>& src, vector<int>& dst, vector<int>& times, std::stri
   }
 }
 
-std::string fit_predict(vector<int>& src, vector<int>& dst, vector<int>& times, int num_rows, int num_buckets, double factor, bool relations) {
-  vector<double>* result;
+std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, double factor, bool relations) {
+  std::vector<double>* result;
   if (relations) {
     result = midasR(src, dst, times, num_rows, num_buckets, factor);
   } else {
@@ -86,14 +86,14 @@ void Init_ext()
     .define_method(
       "_fit_predict_str",
       *[](std::string input, int num_rows, int num_buckets, double factor, bool relations, bool directed) {
-        vector<int> src, dst, times;
+        std::vector<int> src, dst, times;
         load_str(src, dst, times, input, directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, relations);
       })
     .define_method(
       "_fit_predict_file",
       *[](std::string input, int num_rows, int num_buckets, double factor, bool relations, bool directed) {
-        vector<int> src, dst, times;
+        std::vector<int> src, dst, times;
         load_file(src, dst, times, input, !directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, relations);
       });
