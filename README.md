@@ -44,6 +44,7 @@ Midas.new(
   rows: 2,           # number of hash functions
   buckets: 769,      # number of buckets
   alpha: 0.6,        # temporal decay factor
+  threshold: nil,    # [unreleased]
   relations: true,   # whether to use MIDAS-R or MIDAS
   directed: true     # treat the graph as directed or undirected
 )
