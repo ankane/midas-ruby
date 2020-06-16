@@ -41,13 +41,11 @@ class MidasTest < Minitest::Test
   end
 
   def test_undirected
-    skip "Segmentation fault with MIDAS CLI so nothing to compare"
-
     midas = Midas.new(directed: false)
     scores = midas.fit_predict(data)
 
     assert_equal [20000], scores.shape
-    expected = []
+    expected = [0, 0, 0, 0, 1, 1, 2, 2, 0.375, 0.375]
     assert_elements_in_delta expected, scores[0...10]
   end
 
