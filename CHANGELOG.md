@@ -1,3 +1,7 @@
+## 0.2.1 (unreleased)
+
+- Fixed installation (missing header files)
+
 ## 0.2.0 (2020-06-17)
 
 - Updated MIDAS to 1.0.0
