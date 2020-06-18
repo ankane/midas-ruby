@@ -1,4 +1,4 @@
-## 0.2.1 (unreleased)
+## 0.2.1 (2020-06-17)
 
 - Fixed installation (missing header files)
 
