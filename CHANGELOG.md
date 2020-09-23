@@ -1,4 +1,4 @@
-## 0.2.2 (unreleased)
+## 0.2.2 (2020-09-23)
 
 - Updated MIDAS to 1.1.0
 
