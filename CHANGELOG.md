@@ -1,6 +1,6 @@
 ## 0.2.2 (unreleased)
 
-- Updated MIDAS to 1.0.2
+- Updated MIDAS to 1.1.0
 
 ## 0.2.1 (2020-06-17)
 
