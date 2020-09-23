@@ -43,9 +43,11 @@ Pass parameters - default values below
 Midas.new(
   rows: 2,           # number of hash functions
   buckets: 769,      # number of buckets
-  alpha: 0.6,        # temporal decay factor
+  alpha: 0.5,        # temporal decay factor
+  threshold: nil,    # todo
   relations: true,   # whether to use MIDAS-R or MIDAS
-  directed: true     # treat the graph as directed or undirected
+  directed: true,    # treat the graph as directed or undirected
+  seed: 0            # random seed
 )
 ```
 
@@ -57,10 +59,10 @@ Data can be an array of arrays
 [[1, 2, 3], [4, 5, 6]]
 ```
 
-Or a Numo NArray
+Or a Numo array
 
 ```ruby
-Numo::Int32.new(3, 2).seq
+Numo::NArray.cast([[1, 2, 3], [4, 5, 6]])
 ```
 
 ## Performance
