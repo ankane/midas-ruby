@@ -10,7 +10,6 @@ Add these lines to your application’s Gemfile:
 
 ```ruby
 gem 'midas-edge'
-gem 'rice', github: 'jasonroelofs/rice' # for now for c++17
 ```
 
 ## Getting Started
