@@ -2,7 +2,7 @@
 
 [MIDAS](https://github.com/bhatiasiddharth/MIDAS) - edge stream anomaly detection - for Ruby
 
-[![Build Status](https://travis-ci.org/ankane/midas.svg?branch=master)](https://travis-ci.org/ankane/midas)
+[![Build Status](https://github.com/ankane/midas/workflows/build/badge.svg?branch=master)](https://github.com/ankane/midas/actions)
 
 ## Installation
 
