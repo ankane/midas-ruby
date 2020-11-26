@@ -6,7 +6,7 @@
 
 ## Installation
 
-Add these lines to your application’s Gemfile:
+Add this line to your application’s Gemfile:
 
 ```ruby
 gem 'midas-edge'
