@@ -3,11 +3,17 @@ on: [push, pull_request]
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - if: ${{ startsWith(matrix.os, 'macos') }}
+      run: brew install automake
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
