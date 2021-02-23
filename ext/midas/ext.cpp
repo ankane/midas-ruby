@@ -11,11 +11,6 @@
 #include <rice/Module.hpp>
 #include <rice/String.hpp>
 
-using Rice::Module;
-using Rice::String;
-using Rice::define_module;
-using Rice::define_class_under;
-
 void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input, bool directed) {
   int* input_ptr = (int*) input.data();
   size_t n = input.size() / sizeof(int);
@@ -41,8 +36,7 @@ void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& ti
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
-void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input_file, bool undirected)
-{
+void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input_file, bool undirected) {
   FILE* infile = fopen(input_file.c_str(), "r");
   if (infile == NULL) {
     throw std::runtime_error("Could not read file: " + input_file);
@@ -56,8 +50,7 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
       dst.push_back(d);
       times.push_back(t);
     }
-  }
-  else {
+  } else {
     while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
       src.push_back(s);
       dst.push_back(d);
@@ -94,11 +87,10 @@ std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vecto
 }
 
 extern "C"
-void Init_ext()
-{
-  Module rb_mMidas = define_module("Midas");
+void Init_ext() {
+  auto rb_mMidas = Rice::define_module("Midas");
 
-  define_class_under(rb_mMidas, "Detector")
+  Rice::define_class_under(rb_mMidas, "Detector")
     .define_method(
       "_fit_predict_str",
       *[](std::string input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
