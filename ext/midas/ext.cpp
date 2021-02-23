@@ -11,7 +11,7 @@
 #include <rice/Module.hpp>
 #include <rice/String.hpp>
 
-void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input, bool directed) {
+void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input, bool directed) {
   int* input_ptr = (int*) input.data();
   size_t n = input.size() / sizeof(int);
 
@@ -36,7 +36,7 @@ void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& ti
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
-void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, std::string input_file, bool undirected) {
+void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input_file, bool undirected) {
   FILE* infile = fopen(input_file.c_str(), "r");
   if (infile == NULL) {
     throw std::runtime_error("Could not read file: " + input_file);
@@ -93,14 +93,14 @@ void Init_ext() {
   Rice::define_class_under(rb_mMidas, "Detector")
     .define_method(
       "_fit_predict_str",
-      *[](std::string input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      *[](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_str(src, dst, times, input, directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
       })
     .define_method(
       "_fit_predict_file",
-      *[](std::string input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      *[](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_file(src, dst, times, input, !directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
