@@ -8,8 +8,7 @@
 #include <RelationalCore.hpp>
 
 // rice
-#include <rice/Module.hpp>
-#include <rice/String.hpp>
+#include <rice/rice.hpp>
 
 void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input, bool directed) {
   int* input_ptr = (int*) input.data();

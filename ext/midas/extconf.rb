@@ -1,6 +1,6 @@
 require "mkmf-rice"
 
-$CXXFLAGS << " -std=c++11"
+$CXXFLAGS << " -std=c++17"
 
 midas = File.expand_path("../../vendor/MIDAS/src", __dir__)
 $INCFLAGS << " -I#{midas}"
