@@ -10,12 +10,11 @@ Rake::TestTask.new do |t|
 end
 
 Rake::ExtensionTask.new("midas") do |ext|
-  ext.name = "ext"
   ext.lib_dir = "lib/midas"
 end
 
 task :remove_ext do
-  path = "lib/midas/ext.bundle"
+  path = "lib/midas/midas.bundle"
   File.unlink(path) if File.exist?(path)
 end
 

@@ -2,7 +2,7 @@
 require "numo/narray"
 
 # ext
-require "midas/ext"
+require "midas/midas"
 
 # modules
 require "midas/detector"

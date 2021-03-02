@@ -86,7 +86,7 @@ std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vecto
 }
 
 extern "C"
-void Init_ext() {
+void Init_midas() {
   auto rb_mMidas = Rice::define_module("Midas");
 
   Rice::define_class_under(rb_mMidas, "Detector")
