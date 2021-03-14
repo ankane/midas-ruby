@@ -60,6 +60,8 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
       times.push_back(t);
     }
   }
+
+  fclose(infile);
 }
 
 std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
