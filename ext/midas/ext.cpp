@@ -65,7 +65,8 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
 std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
   srand(seed);
   size_t n = src.size();
-  const auto result = new float[n];
+  std::vector<float> result;
+  result.reserve(n);
 
   if (!std::isnan(threshold)) {
     MIDAS::FilteringCore midas(num_rows, num_buckets, threshold, factor);
@@ -83,7 +84,9 @@ std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vecto
       result[i] = midas(src[i], dst[i], times[i]);
     }
   }
-  return std::string((char*) result, sizeof(float) / sizeof(char) * n);
+
+  // std::string copies data
+  return std::string((char*) result.data(), sizeof(float) / sizeof(char) * n);
 }
 
 extern "C"
