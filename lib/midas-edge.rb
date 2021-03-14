@@ -1,6 +1,3 @@
-# dependencies
-require "numo/narray"
-
 # ext
 require "midas/ext"
 
