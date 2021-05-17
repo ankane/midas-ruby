@@ -1,8 +1,3 @@
-## 0.3.0 (unreleased)
-
-- Removed dependency on Numo
-- Changed `fit_predict` to return a Ruby array
-
 ## 0.2.3 (2020-11-17)
 
 - Updated MIDAS to 1.1.2
