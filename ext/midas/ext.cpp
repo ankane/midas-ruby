@@ -8,8 +8,8 @@
 #include <RelationalCore.hpp>
 
 // rice
-#include <rice/Module.hpp>
-#include <rice/String.hpp>
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 
 void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input, bool directed) {
   int* input_ptr = (int*) input.data();
@@ -96,16 +96,16 @@ void Init_ext() {
   auto rb_mMidas = Rice::define_module("Midas");
 
   Rice::define_class_under(rb_mMidas, "Detector")
-    .define_method(
+    .define_function(
       "_fit_predict_str",
-      *[](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      [](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_str(src, dst, times, input, directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
       })
-    .define_method(
+    .define_function(
       "_fit_predict_file",
-      *[](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      [](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
         load_file(src, dst, times, input, !directed);
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);

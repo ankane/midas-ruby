@@ -1,3 +1,8 @@
+## 0.3.0 (unreleased)
+
+- Updated to Rice 4
+- Dropped support for Ruby < 2.6
+
 ## 0.2.3 (2020-11-17)
 
 - Updated MIDAS to 1.1.2
