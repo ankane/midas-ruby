@@ -11,21 +11,39 @@
 #include <rice/rice.hpp>
 #include <rice/stl.hpp>
 
-void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input, bool directed) {
-  int* input_ptr = (int*) input.data();
-  size_t n = input.size() / sizeof(int);
+// numo
+#include "numo.hpp"
+
+void load_array(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, numo::Int32 input, bool directed) {
+  auto shape = input.shape();
+  if (input.ndim() != 2 || shape[1] != 3) {
+    throw Rice::Exception(rb_eArgError, "Bad shape");
+  }
+
+  auto input_ptr = input.read_ptr();
+  auto n = shape[0];
+  auto sz = input.size();
 
   if (directed) {
-    for (size_t i = 0; i < n; i += 3) {
+    src.reserve(n);
+    dst.reserve(n);
+    times.reserve(n);
+
+    for (size_t i = 0; i < sz; i += 3) {
       src.push_back(input_ptr[i]);
       dst.push_back(input_ptr[i + 1]);
       times.push_back(input_ptr[i + 2]);
     }
   } else {
-    for (size_t i = 0; i < n; i += 3) {
+    src.reserve(n * 2);
+    dst.reserve(n * 2);
+    times.reserve(n * 2);
+
+    for (size_t i = 0; i < sz; i += 3) {
       src.push_back(input_ptr[i]);
       dst.push_back(input_ptr[i + 1]);
       times.push_back(input_ptr[i + 2]);
+
       src.push_back(input_ptr[i + 1]);
       dst.push_back(input_ptr[i]);
       times.push_back(input_ptr[i + 2]);
@@ -36,15 +54,15 @@ void load_str(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& ti
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
-void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, const std::string& input_file, bool undirected) {
+void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, Rice::String input_file, bool directed) {
   FILE* infile = fopen(input_file.c_str(), "r");
   if (infile == NULL) {
-    throw std::runtime_error("Could not read file: " + input_file);
+    throw std::runtime_error("Could not read file: " + input_file.str());
   }
 
   int s, d, t;
 
-  if (undirected == false) {
+  if (directed) {
     while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
       src.push_back(s);
       dst.push_back(d);
@@ -55,6 +73,7 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
       src.push_back(s);
       dst.push_back(d);
       times.push_back(t);
+
       src.push_back(d);
       dst.push_back(s);
       times.push_back(t);
@@ -64,11 +83,12 @@ void load_file(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& t
   fclose(infile);
 }
 
-std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
+Rice::Object fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vector<int>& times, int num_rows, int num_buckets, float factor, float threshold, bool relations, int seed) {
   srand(seed);
   size_t n = src.size();
-  std::vector<float> result;
-  result.reserve(n);
+
+  auto ary = numo::SFloat({n});
+  auto result = ary.write_ptr();
 
   if (!std::isnan(threshold)) {
     MIDAS::FilteringCore midas(num_rows, num_buckets, threshold, factor);
@@ -87,8 +107,7 @@ std::string fit_predict(std::vector<int>& src, std::vector<int>& dst, std::vecto
     }
   }
 
-  // std::string copies data
-  return std::string((char*) result.data(), sizeof(float) / sizeof(char) * n);
+  return ary;
 }
 
 extern "C"
@@ -97,17 +116,14 @@ void Init_ext() {
 
   Rice::define_class_under(rb_mMidas, "Detector")
     .define_function(
-      "_fit_predict_str",
-      [](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      "_fit_predict",
+      [](Rice::Object input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
         std::vector<int> src, dst, times;
-        load_str(src, dst, times, input, directed);
-        return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
-      })
-    .define_function(
-      "_fit_predict_file",
-      [](const std::string& input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
-        std::vector<int> src, dst, times;
-        load_file(src, dst, times, input, !directed);
+        if (input.is_a(rb_cString)) {
+          load_file(src, dst, times, input, directed);
+        } else {
+          load_array(src, dst, times, input, directed);
+        }
         return fit_predict(src, dst, times, num_rows, num_buckets, factor, threshold, relations, seed);
       });
 }
