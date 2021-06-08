@@ -1,3 +1,7 @@
+## 0.3.2 (unreleased)
+
+- Fixed installation error
+
 ## 0.3.1 (2021-05-23)
 
 - Improved performance
