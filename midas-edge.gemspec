@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name          = "midas-edge"
   spec.version       = Midas::VERSION
   spec.summary       = "Edge stream anomaly detection for Ruby"
-  spec.homepage      = "https://github.com/ankane/midas"
+  spec.homepage      = "https://github.com/ankane/midas-ruby"
   spec.license       = "MIT"
 
   spec.author        = "Andrew Kane"

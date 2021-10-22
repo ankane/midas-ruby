@@ -1,8 +1,8 @@
-# MIDAS
+# MIDAS Ruby
 
 [MIDAS](https://github.com/bhatiasiddharth/MIDAS) - edge stream anomaly detection - for Ruby
 
-[![Build Status](https://github.com/ankane/midas/workflows/build/badge.svg?branch=master)](https://github.com/ankane/midas/actions)
+[![Build Status](https://github.com/ankane/midas-ruby/workflows/build/badge.svg?branch=master)](https://github.com/ankane/midas-ruby/actions)
 
 ## Installation
 
@@ -78,22 +78,22 @@ midas.fit_predict("data.csv")
 
 ## History
 
-View the [changelog](https://github.com/ankane/midas/blob/master/CHANGELOG.md)
+View the [changelog](https://github.com/ankane/midas-ruby/blob/master/CHANGELOG.md)
 
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/ankane/midas/issues)
-- Fix bugs and [submit pull requests](https://github.com/ankane/midas/pulls)
+- [Report bugs](https://github.com/ankane/midas-ruby/issues)
+- Fix bugs and [submit pull requests](https://github.com/ankane/midas-ruby/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
 To get started with development:
 
 ```sh
-git clone --recursive https://github.com/ankane/midas.git
-cd midas
+git clone --recursive https://github.com/ankane/midas-ruby.git
+cd midas-ruby
 bundle install
 bundle exec rake compile
 bundle exec rake test
