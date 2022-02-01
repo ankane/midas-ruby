@@ -1,12 +1,19 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 require "rake/extensiontask"
+require "ruby_memcheck"
+
+RubyMemcheck.config(binary_name: "ext")
 
 task default: :test
-Rake::TestTask.new do |t|
+test_config = lambda do |t|
   t.libs << "test"
   t.pattern = "test/**/*_test.rb"
   t.warning = false
+end
+Rake::TestTask.new(test: :compile, &test_config)
+namespace :test do
+  RubyMemcheck::TestTask.new(valgrind: :compile, &test_config)
 end
 
 Rake::ExtensionTask.new("midas") do |ext|
