@@ -9,7 +9,7 @@
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'midas-edge'
+gem "midas-edge"
 ```
 
 ## Getting Started
