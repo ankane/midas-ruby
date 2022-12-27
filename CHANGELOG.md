@@ -1,3 +1,7 @@
+## 0.3.3 (unreleased)
+
+- Fixed installation error on Mac
+
 ## 0.3.2 (2021-06-08)
 
 - Fixed installation error
