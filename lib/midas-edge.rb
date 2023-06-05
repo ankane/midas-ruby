@@ -5,8 +5,8 @@ require "numo/narray"
 require "midas/ext"
 
 # modules
-require "midas/detector"
-require "midas/version"
+require_relative "midas/detector"
+require_relative "midas/version"
 
 module Midas
   class Error < StandardError; end
