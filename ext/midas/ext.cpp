@@ -76,8 +76,9 @@ Rice::Object fit_predict(T& midas, Rice::Object input, bool directed) {
   std::vector<float> result;
   if (input.is_a(rb_cString)) {
     load_file(midas, input, directed, result);
-  } else if (input.is_instance_of(rb_cArray)) {
-    load_array(midas, input, directed, result);
+  // TODO uncomment in 0.6.0
+  // } else if (input.is_instance_of(rb_cArray)) {
+  //   load_array(midas, input, directed, result);
   } else {
     load_numo_array(midas, input, directed, result);
   }
