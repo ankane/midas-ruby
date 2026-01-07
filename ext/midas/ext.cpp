@@ -40,8 +40,8 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
   auto sz = input.size();
 
   for (size_t i = 0; i < sz; i += 3) {
-    int d = input_ptr[i];
-    int s = input_ptr[i + 1];
+    int s = input_ptr[i];
+    int d = input_ptr[i + 1];
     int t = input_ptr[i + 2];
     result.push_back(midas(s, d, t));
     if (!directed) {
