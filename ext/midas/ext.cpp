@@ -96,6 +96,14 @@ extern "C"
 void Init_ext() {
   auto rb_mMidas = Rice::define_module("Midas");
 
+  // TODO make seed part of Core classes
+  Rice::define_class_under(rb_mMidas, "Detector")
+    .define_function(
+      "_set_seed",
+      [](int seed) {
+        srand(seed);
+      });
+
   Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
     .define_constructor(Rice::Constructor<MIDAS::FilteringCore, int, int, float, float>())
     .define_method(
@@ -118,12 +126,5 @@ void Init_ext() {
       "fit_predict",
       [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
         return fit_predict(self, input, directed);
-      });
-
-  Rice::define_class_under(rb_mMidas, "Detector")
-    .define_function(
-      "_set_seed",
-      [](int seed) {
-        srand(seed);
       });
 }
