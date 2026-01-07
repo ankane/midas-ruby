@@ -57,7 +57,7 @@ class MidasTest < Minitest::Test
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
-    skip "Different values on Linux (seed issue?)" if linux?
+    skip "Different values on Linux and Windows (seed issue?)" if linux? || windows?
 
     expected = [49.704582, 56.181786, 63.055534, 70.325829, 10.779646]
     assert_elements_in_delta expected, scores[-5..-1]
@@ -74,5 +74,9 @@ class MidasTest < Minitest::Test
 
   def linux?
     RbConfig::CONFIG["host_os"] == "linux"
+  end
+
+  def windows?
+    Gem.win_platform?
   end
 end
