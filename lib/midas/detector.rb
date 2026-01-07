@@ -1,6 +1,14 @@
 module Midas
   class Detector
-    def initialize(rows: 2, buckets: 769, alpha: 0.5, threshold: nil, relations: true, directed: true, seed: 0)
+    def initialize(
+      rows: 2,
+      buckets: 769,
+      alpha: 0.5,
+      threshold: nil,
+      relations: true,
+      directed: true,
+      seed: 0
+    )
       @rows = rows
       @buckets = buckets
       @alpha = alpha
