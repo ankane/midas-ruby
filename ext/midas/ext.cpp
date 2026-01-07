@@ -17,21 +17,13 @@
 
 template<typename T>
 void load_array(T& midas, Rice::Array input, bool directed, std::vector<float>& result) {
-  if (directed) {
-    for (auto r : input) {
-      Rice::Array row(r);
-      int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
-      int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
-      int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
-      result.push_back(midas(s, d, t));
-    }
-  } else {
-    for (auto r : input) {
-      Rice::Array row(r);
-      int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
-      int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
-      int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
-      result.push_back(midas(s, d, t));
+  for (auto r : input) {
+    Rice::Array row(r);
+    int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
+    int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
+    int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
+    result.push_back(midas(s, d, t));
+    if (!directed) {
       result.push_back(midas(d, s, t));
     }
   }
@@ -47,14 +39,13 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
   auto input_ptr = input.read_ptr();
   auto sz = input.size();
 
-  if (directed) {
-    for (size_t i = 0; i < sz; i += 3) {
-      result.push_back(midas(input_ptr[i], input_ptr[i + 1], input_ptr[i + 2]));
-    }
-  } else {
-    for (size_t i = 0; i < sz; i += 3) {
-      result.push_back(midas(input_ptr[i], input_ptr[i + 1], input_ptr[i + 2]));
-      result.push_back(midas(input_ptr[i + 1], input_ptr[i], input_ptr[i + 2]));
+  for (size_t i = 0; i < sz; i += 3) {
+    int d = input_ptr[i];
+    int s = input_ptr[i + 1];
+    int t = input_ptr[i + 2];
+    result.push_back(midas(s, d, t));
+    if (!directed) {
+      result.push_back(midas(d, s, t));
     }
   }
 }
@@ -70,14 +61,9 @@ void load_file(T& midas, Rice::String input_file, bool directed, std::vector<flo
   }
 
   int s, d, t;
-
-  if (directed) {
-    while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
-      result.push_back(midas(s, d, t));
-    }
-  } else {
-    while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
-      result.push_back(midas(s, d, t));
+  while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
+    result.push_back(midas(s, d, t));
+    if (!directed) {
       result.push_back(midas(d, s, t));
     }
   }
