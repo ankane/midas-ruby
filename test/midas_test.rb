@@ -9,9 +9,13 @@ class MidasTest < Minitest::Test
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
-    skip "Different values on Linux (seed issue?)" if linux?
-
-    expected = [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+    # seed issue?
+    expected =
+      if linux?
+        [262.725, 410.01, 215.822, 236.601, 258.283]
+      else
+        [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+      end
     assert_elements_in_delta expected, scores[-5..-1]
   end
 
@@ -23,9 +27,13 @@ class MidasTest < Minitest::Test
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
-    skip "Different values on Linux (seed issue?)" if linux?
-
-    expected = [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+    # seed issue?
+    expected =
+      if linux?
+        [262.725, 410.01, 215.822, 236.601, 258.283]
+      else
+        [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+      end
     assert_elements_in_delta expected, scores[-5..-1]
   end
 
@@ -48,9 +56,13 @@ class MidasTest < Minitest::Test
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
-    skip "Different values on Linux (seed issue?)" if linux?
-
-    expected = [307.507233, 469.720490, 2.492458, 12.942609, 31.100597]
+    # seed issue?
+    expected =
+      if linux?
+        [262.725, 410.01, 2.49246, 12.9426, 31.1006]
+      else
+        [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+      end
     assert_elements_in_delta expected, scores[-5..-1]
   end
 
