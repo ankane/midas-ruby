@@ -104,11 +104,11 @@ void Init_ext() {
         srand(seed);
       });
 
-  Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
-    .define_constructor(Rice::Constructor<MIDAS::FilteringCore, int, int, float, float>())
+  Rice::define_class_under<MIDAS::NormalCore>(rb_mMidas, "NormalCore")
+    .define_constructor(Rice::Constructor<MIDAS::NormalCore, int, int>())
     .define_method(
       "fit_predict",
-      [](MIDAS::FilteringCore& self, Rice::Object input, bool directed) {
+      [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
         return fit_predict(self, input, directed);
       });
 
@@ -120,11 +120,11 @@ void Init_ext() {
         return fit_predict(self, input, directed);
       });
 
-  Rice::define_class_under<MIDAS::NormalCore>(rb_mMidas, "NormalCore")
-    .define_constructor(Rice::Constructor<MIDAS::NormalCore, int, int>())
+  Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
+    .define_constructor(Rice::Constructor<MIDAS::FilteringCore, int, int, float, float>())
     .define_method(
       "fit_predict",
-      [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
+      [](MIDAS::FilteringCore& self, Rice::Object input, bool directed) {
         return fit_predict(self, input, directed);
       });
 }
