@@ -32,7 +32,7 @@ midas = Midas.new
 scores = midas.fit_predict(data)
 ```
 
-Higher scores are more anomalous. There is [not currently](https://github.com/bhatiasiddharth/MIDAS/issues/4) a defined threshold for anomalies.
+Higher scores are more anomalous. There is [not currently](https://github.com/Stream-AD/MIDAS/issues/4) a defined threshold for anomalies.
 
 ## Parameters
 
