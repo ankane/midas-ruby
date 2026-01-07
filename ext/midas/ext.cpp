@@ -35,14 +35,12 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
   if (input.ndim() == 1 && shape[0] == 0) {
     return;
   }
-
   if (input.ndim() != 2 || shape[1] != 3) {
     throw Rice::Exception(rb_eArgError, "Bad shape");
   }
 
-  auto input_ptr = input.read_ptr();
   auto sz = input.size();
-
+  auto input_ptr = input.read_ptr();
   for (size_t i = 0; i < sz; i += 3) {
     int s = input_ptr[i];
     int d = input_ptr[i + 1];
