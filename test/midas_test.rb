@@ -106,8 +106,4 @@ class MidasTest < Minitest::Test
   def linux?
     RbConfig::CONFIG["host_os"] == "linux"
   end
-
-  def windows?
-    Gem.win_platform?
-  end
 end
