@@ -3,7 +3,7 @@ require_relative "test_helper"
 class MidasTest < Minitest::Test
   def test_array
     midas = Midas.new(buckets: 1024)
-    scores = midas.fit_predict(data.to_a)
+    scores = midas.fit_predict(data)
 
     assert_equal [10000], scores.shape
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
@@ -80,6 +80,12 @@ class MidasTest < Minitest::Test
   def test_empty
     midas = Midas.new(buckets: 1024)
     assert_empty midas.fit_predict([])
+  end
+
+  def test_partial_fit
+    midas = Midas.new(buckets: 1024)
+    assert_elements_in_delta [0, 0, 1, 2, 2], midas.partial_fit(data[0..4])
+    assert_elements_in_delta [4, 2, 2, 3, 6], midas.partial_fit(data[5..9])
   end
 
   private

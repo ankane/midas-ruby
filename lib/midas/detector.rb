@@ -11,8 +11,14 @@ module Midas
     end
 
     def fit_predict(x)
-      # create new core for each call
-      core.fit_predict(x, @directed)
+      @core = nil # reset core
+      partial_fit(x)
+    end
+
+    # TODO better name
+    def partial_fit(x)
+      @core ||= core
+      @core.fit_predict(x, @directed)
     end
 
     private
