@@ -16,7 +16,29 @@
 #include "numo.hpp"
 
 template<typename T>
-void load_array(T& midas, numo::Int32 input, bool directed, std::vector<float>& result) {
+void load_array(T& midas, Rice::Array input, bool directed, std::vector<float>& result) {
+  if (directed) {
+    for (auto r : input) {
+      Rice::Array row(r);
+      int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
+      int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
+      int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
+      result.push_back(midas(s, d, t));
+    }
+  } else {
+    for (auto r : input) {
+      Rice::Array row(r);
+      int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
+      int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
+      int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
+      result.push_back(midas(s, d, t));
+      result.push_back(midas(d, s, t));
+    }
+  }
+}
+
+template<typename T>
+void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<float>& result) {
   auto shape = input.shape();
   if (input.ndim() != 2 || shape[1] != 3) {
     throw Rice::Exception(rb_eArgError, "Bad shape");
@@ -68,8 +90,10 @@ Rice::Object fit_predict(T& midas, Rice::Object input, bool directed) {
   std::vector<float> result;
   if (input.is_a(rb_cString)) {
     load_file(midas, input, directed, result);
-  } else {
+  } else if (input.is_instance_of(rb_cArray)) {
     load_array(midas, input, directed, result);
+  } else {
+    load_numo_array(midas, input, directed, result);
   }
 
   size_t n = result.size();
