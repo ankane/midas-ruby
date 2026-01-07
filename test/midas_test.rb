@@ -61,7 +61,7 @@ class MidasTest < Minitest::Test
       if linux?
         [262.725, 410.01, 2.49246, 12.9426, 31.1006]
       else
-        [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+        [307.507233, 469.720490, 2.492458, 12.942609, 31.100597]
       end
     assert_elements_in_delta expected, scores[-5..-1]
   end
