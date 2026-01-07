@@ -32,6 +32,10 @@ void load_array(T& midas, Rice::Array input, bool directed, std::vector<float>& 
 template<typename T>
 void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<float>& result) {
   auto shape = input.shape();
+  if (input.ndim() == 1 && shape[0] == 0) {
+    return;
+  }
+
   if (input.ndim() != 2 || shape[1] != 3) {
     throw Rice::Exception(rb_eArgError, "Bad shape");
   }

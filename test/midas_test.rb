@@ -77,6 +77,13 @@ class MidasTest < Minitest::Test
     assert_elements_in_delta expected, scores[-5..-1]
   end
 
+  def test_empty
+    midas = Midas.new(buckets: 1024)
+    assert_empty midas.fit_predict([])
+  end
+
+  private
+
   def data
     data = []
     File.foreach("vendor/MIDAS/data/DARPA/darpa_processed.csv").with_index do |line, i|
