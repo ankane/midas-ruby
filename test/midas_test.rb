@@ -1,9 +1,23 @@
 require_relative "test_helper"
 
 class MidasTest < Minitest::Test
-  def test_works
+  def test_array
     midas = Midas.new(buckets: 1024)
-    scores = midas.fit_predict(data)
+    scores = midas.fit_predict(data.to_a)
+
+    assert_equal [10000], scores.shape
+    expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
+    assert_elements_in_delta expected, scores[0...10]
+
+    skip "Different values on Linux (seed issue?)" if linux?
+
+    expected = [307.507233, 469.720490, 215.821609, 236.601303, 258.282837]
+    assert_elements_in_delta expected, scores[-5..-1]
+  end
+
+  def test_numo_array
+    midas = Midas.new(buckets: 1024)
+    scores = midas.fit_predict(Numo::Int32.cast(data))
 
     assert_equal [10000], scores.shape
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
@@ -69,7 +83,7 @@ class MidasTest < Minitest::Test
       break if i == 10000
       data << line.split(",").map(&:to_i)
     end
-    Numo::Int32.cast(data)
+    data
   end
 
   def linux?
