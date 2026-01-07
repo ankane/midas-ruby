@@ -96,21 +96,34 @@ extern "C"
 void Init_ext() {
   auto rb_mMidas = Rice::define_module("Midas");
 
+  Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
+    .define_constructor(Rice::Constructor<MIDAS::FilteringCore, int, int, float, float>())
+    .define_method(
+      "fit_predict",
+      [](MIDAS::FilteringCore& self, Rice::Object input, bool directed) {
+        return fit_predict(self, input, directed);
+      });
+
+  Rice::define_class_under<MIDAS::RelationalCore>(rb_mMidas, "RelationalCore")
+    .define_constructor(Rice::Constructor<MIDAS::RelationalCore, int, int, float>())
+    .define_method(
+      "fit_predict",
+      [](MIDAS::RelationalCore& self, Rice::Object input, bool directed) {
+        return fit_predict(self, input, directed);
+      });
+
+  Rice::define_class_under<MIDAS::NormalCore>(rb_mMidas, "NormalCore")
+    .define_constructor(Rice::Constructor<MIDAS::NormalCore, int, int>())
+    .define_method(
+      "fit_predict",
+      [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
+        return fit_predict(self, input, directed);
+      });
+
   Rice::define_class_under(rb_mMidas, "Detector")
     .define_function(
-      "_fit_predict",
-      [](Rice::Object input, int num_rows, int num_buckets, float factor, float threshold, bool relations, bool directed, int seed) {
+      "_set_seed",
+      [](int seed) {
         srand(seed);
-
-        if (!std::isnan(threshold)) {
-          MIDAS::FilteringCore midas(num_rows, num_buckets, threshold, factor);
-          return fit_predict(midas, input, directed);
-        } else if (relations) {
-          MIDAS::RelationalCore midas(num_rows, num_buckets, factor);
-          return fit_predict(midas, input, directed);
-        } else {
-          MIDAS::NormalCore midas(num_rows, num_buckets);
-          return fit_predict(midas, input, directed);
-        }
       });
 }

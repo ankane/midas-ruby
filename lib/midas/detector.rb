@@ -11,7 +11,17 @@ module Midas
     end
 
     def fit_predict(x)
-      _fit_predict(x, @rows, @buckets, @alpha, @threshold || Float::NAN, @relations, @directed, @seed)
+      # TODO move core (including seed) to initialize
+      _set_seed(@seed)
+      core =
+        if @threshold && !@threshold.to_f.nan?
+          FilteringCore.new(@rows, @buckets, @threshold, @alpha)
+        elsif @relations
+          RelationalCore.new(@rows, @buckets, @alpha)
+        else
+          NormalCore.new(@rows, @buckets)
+        end
+      core.fit_predict(x, @directed)
     end
   end
 end
