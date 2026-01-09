@@ -19,6 +19,9 @@ template<typename T>
 void load_array(T& midas, Rice::Array input, bool directed, std::vector<float>& result) {
   for (auto r : input) {
     Rice::Array row(r);
+    if (row.size() != 3) {
+      throw Rice::Exception(rb_eArgError, "Bad shape");
+    }
     int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
     int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
     int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
