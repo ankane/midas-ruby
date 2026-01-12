@@ -92,16 +92,16 @@ class MidasTest < Minitest::Test
     assert_empty midas.fit_predict([])
   end
 
-  def test_partial_fit_predict
-    midas = Midas.new(buckets: 1024)
-    assert_elements_in_delta [0, 0, 1, 2, 2], midas.partial_fit_predict(data.first(5))
-    assert_elements_in_delta [0, 0, 0.333333, 1, 4], midas.partial_fit_predict(data.first(5))
-  end
-
   def test_fit_predict
     midas = Midas.new(buckets: 1024)
     assert_elements_in_delta [0, 0, 1, 2, 2], midas.fit_predict(data.first(5))
     assert_elements_in_delta [0, 0, 1, 2, 2], midas.fit_predict(data.first(5))
+  end
+
+  def test_partial_fit_predict
+    midas = Midas.new(buckets: 1024)
+    assert_elements_in_delta [0, 0, 1, 2, 2], midas.partial_fit_predict(data.first(5))
+    assert_elements_in_delta [0, 0, 0.333333, 1, 4], midas.partial_fit_predict(data.first(5))
   end
 
   private
