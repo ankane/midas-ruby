@@ -20,11 +20,11 @@ module Midas
 
     def fit_predict(x)
       @core = nil # reset core
-      partial_fit(x)
+      partial_fit_predict(x)
     end
 
     # TODO better name
-    def partial_fit(x)
+    def partial_fit_predict(x)
       @core ||= core
       @core.fit_predict(x, @directed)
     end

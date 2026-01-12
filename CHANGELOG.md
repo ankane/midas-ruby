@@ -1,6 +1,6 @@
 ## 0.5.1 (unreleased)
 
-- Added `partial_fit` method
+- Added `partial_fit_predict` method
 - Reduced memory usage
 
 ## 0.5.0 (2025-04-03)
