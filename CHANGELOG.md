@@ -1,4 +1,4 @@
-## 0.5.1 (unreleased)
+## 0.5.1 (2026-02-07)
 
 - Added `partial_fit_predict` method
 - Reduced memory usage
