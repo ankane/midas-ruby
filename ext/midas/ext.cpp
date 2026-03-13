@@ -34,7 +34,7 @@ void load_array(T& midas, Rice::Array input, bool directed, std::vector<float>& 
 
 template<typename T>
 void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<float>& result) {
-  auto shape = input.shape();
+  const auto* shape = input.shape();
   if (input.ndim() == 1 && shape[0] == 0) {
     return;
   }
@@ -42,8 +42,8 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
     throw Rice::Exception(rb_eArgError, "Bad shape");
   }
 
-  auto sz = input.size();
-  auto input_ptr = input.read_ptr();
+  size_t sz = input.size();
+  const int32_t* input_ptr = input.read_ptr();
   for (size_t i = 0; i < sz; i += 3) {
     int s = input_ptr[i];
     int d = input_ptr[i + 1];
@@ -61,11 +61,13 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
 template<typename T>
 void load_file(T& midas, Rice::String input_file, bool directed, std::vector<float>& result) {
   FILE* infile = fopen(input_file.c_str(), "r");
-  if (infile == NULL) {
+  if (infile == nullptr) {
     throw std::runtime_error("Could not read file: " + input_file.str());
   }
 
-  int s, d, t;
+  int s;
+  int d;
+  int t;
   while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
     result.push_back(midas(s, d, t));
     if (!directed) {
@@ -89,11 +91,8 @@ Rice::Object fit_predict(T& midas, Rice::Object input, bool directed) {
   }
 
   size_t n = result.size();
-  auto ary = numo::SFloat({n});
-  auto out = ary.write_ptr();
-  for (size_t i = 0; i < n; i++) {
-    out[i] = result[i];
-  }
+  numo::SFloat ary{{n}};
+  std::copy(result.begin(), result.end(), ary.write_ptr());
   return ary;
 }
 
