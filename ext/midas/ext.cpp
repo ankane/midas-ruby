@@ -101,7 +101,7 @@ Rice::Object fit_predict(T& midas, Rice::Object input, bool directed) {
   }
 
   size_t n = result.size();
-  numo::SFloat ary{{n}};
+  numo::SFloat ary({n});
   std::copy(result.begin(), result.end(), ary.write_ptr());
   return ary;
 }
