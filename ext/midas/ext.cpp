@@ -1,6 +1,11 @@
 // stdlib
+#include <algorithm>
+#include <cstddef>
+#include <cstdlib>
+#include <cstdint>
 #include <cstdio>
 #include <fstream>
+#include <string>
 #include <vector>
 
 // midas
@@ -110,7 +115,7 @@ void Init_ext() {
     .define_function(
       "_set_seed",
       [](int seed) {
-        srand(seed);
+        std::srand(seed);
       });
 
   Rice::define_class_under<MIDAS::NormalCore>(rb_mMidas, "NormalCore")
