@@ -1,6 +1,6 @@
 // stdlib
 #include <cstdio>
-#include <iostream>
+#include <fstream>
 #include <vector>
 
 // midas
@@ -60,22 +60,27 @@ void load_numo_array(T& midas, numo::Int32 input, bool directed, std::vector<flo
 // instead of exiting
 template<typename T>
 void load_file(T& midas, Rice::String input_file, bool directed, std::vector<float>& result) {
-  FILE* infile = fopen(input_file.c_str(), "r");
-  if (infile == nullptr) {
-    throw std::runtime_error("Could not read file: " + input_file.str());
+  std::ifstream infile(input_file.str());
+  if (!infile.is_open()) {
+    throw std::runtime_error{"Could not read file: " + input_file.str()};
   }
+  std::string line;
 
-  int s;
-  int d;
-  int t;
-  while (fscanf(infile, "%d,%d,%d", &s, &d, &t) == 3) {
+  while (std::getline(infile, line)) {
+    int s;
+    int d;
+    int t;
+
+    // TODO replace
+    if (std::sscanf(line.c_str(), "%d,%d,%d", &s, &d, &t) != 3) {
+      break;
+    }
+
     result.push_back(midas(s, d, t));
     if (!directed) {
       result.push_back(midas(d, s, t));
     }
   }
-
-  fclose(infile);
 }
 
 template<typename T>
