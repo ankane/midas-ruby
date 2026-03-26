@@ -1,12 +1,8 @@
 // stdlib
-#include <algorithm>
-#include <cstddef>
-#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
 #include <string>
-#include <vector>
 
 // midas
 #include <FilteringCore.hpp>
@@ -15,7 +11,6 @@
 
 // rice
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
