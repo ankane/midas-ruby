@@ -45,7 +45,6 @@ Midas::Detector.new(
   alpha: 0.5,        # temporal decay factor
   threshold: nil,    # todo
   relations: true,   # whether to use MIDAS-R or MIDAS
-  directed: true,    # treat the graph as directed or undirected
   seed: 0            # random seed
 )
 ```

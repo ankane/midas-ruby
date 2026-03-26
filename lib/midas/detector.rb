@@ -6,7 +6,6 @@ module Midas
       alpha: 0.5,
       threshold: nil,
       relations: true,
-      directed: true,
       seed: 0
     )
       @rows = rows
@@ -14,22 +13,20 @@ module Midas
       @alpha = alpha
       @threshold = threshold
       @relations = relations
-      @directed = directed
       @seed = seed
     end
 
-    def fit_predict(x)
+    def fit_predict(x, directed: true)
       @core = nil # reset core
-      partial_fit_predict(x)
+      partial_fit_predict(x, directed:)
     end
 
     # TODO better name
-    def partial_fit_predict(x)
+    def partial_fit_predict(x, directed: true)
       @core ||= core
-      @core.fit_predict(x, @directed)
+      @core.fit_predict(x, directed)
     end
 
-    # TODO decide how to handle @directed
     def update(source, destination, time)
       @core ||= core
       @core.update(source, destination, time.to_i)

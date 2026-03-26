@@ -67,8 +67,8 @@ class MidasTest < Minitest::Test
   end
 
   def test_undirected
-    midas = Midas::Detector.new(directed: false)
-    scores = midas.fit_predict(data)
+    midas = Midas::Detector.new
+    scores = midas.fit_predict(data, directed: false)
 
     assert_equal 20000, scores.size
     expected = [0, 0, 0, 0, 1, 1, 2, 2, 0.375, 0.375]
