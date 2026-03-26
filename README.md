@@ -1,6 +1,6 @@
 # MIDAS Ruby
 
-[MIDAS](https://github.com/bhatiasiddharth/MIDAS) - edge stream anomaly detection - for Ruby
+[MIDAS](https://github.com/Stream-AD/MIDAS) - edge stream anomaly detection - for Ruby
 
 [![Build Status](https://github.com/ankane/midas-ruby/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/midas-ruby/actions)
 
