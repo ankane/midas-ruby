@@ -50,20 +50,6 @@ Midas::Detector.new(
 )
 ```
 
-## Data
-
-Data can be an array of arrays
-
-```ruby
-[[1, 2, 3], [4, 5, 6]]
-```
-
-Or a Numo array
-
-```ruby
-Numo::NArray.cast([[1, 2, 3], [4, 5, 6]])
-```
-
 ## Performance
 
 For large datasets, read data directly from files

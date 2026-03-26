@@ -5,7 +5,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict(data)
 
-    assert_equal [10000], scores.shape
+    assert_equal 10000, scores.size
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
@@ -23,7 +23,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict(Numo::Int32.cast(data))
 
-    assert_equal [10000], scores.shape
+    assert_equal 10000, scores.size
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
@@ -41,7 +41,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(buckets: 1024, threshold: 1e3)
     scores = midas.fit_predict(data)
 
-    assert_equal [10000], scores.shape
+    assert_equal 10000, scores.size
     expected = [0, 0, 0, 0, 0, 0, 0, 0, 0.005952, 1.005952]
     assert_elements_in_delta expected, scores[0...10]
     expected = [631.594849, 696.509277, 764.598450, 835.862366, 910.301086]
@@ -52,7 +52,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(buckets: 1024, relations: false)
     scores = midas.fit_predict(data)
 
-    assert_equal [10000], scores.shape
+    assert_equal 10000, scores.size
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 
@@ -70,7 +70,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(directed: false)
     scores = midas.fit_predict(data)
 
-    assert_equal [20000], scores.shape
+    assert_equal 20000, scores.size
     expected = [0, 0, 0, 0, 1, 1, 2, 2, 0.375, 0.375]
     assert_elements_in_delta expected, scores[0...10]
   end
@@ -79,7 +79,7 @@ class MidasTest < Minitest::Test
     midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict("vendor/MIDAS/data/DARPA/darpa_processed.csv")
 
-    assert_equal [4554344], scores.shape
+    assert_equal 4554344, scores.size
     expected = [0, 0, 1, 2, 2, 4, 2, 2, 3, 6]
     assert_elements_in_delta expected, scores[0...10]
 

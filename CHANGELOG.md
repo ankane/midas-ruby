@@ -1,6 +1,7 @@
 ## 0.6.0 (unreleased)
 
 - Added `update` method
+- Removed dependency on `numo-narray`
 - Dropped support for Ruby < 3.3
 
 ## 0.5.1 (2026-02-07)
