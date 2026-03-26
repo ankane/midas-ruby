@@ -1,6 +1,7 @@
-## 0.5.2 (unreleased)
+## 0.6.0 (unreleased)
 
 - Added `update` method
+- Dropped support for Ruby < 3.3
 
 ## 0.5.1 (2026-02-07)
 
