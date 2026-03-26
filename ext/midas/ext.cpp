@@ -21,7 +21,7 @@
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
 template<typename T>
-Rice::Array load_file(T& midas, Rice::String input_file, bool directed) {
+Rice::Array update_file(T& midas, Rice::String input_file, bool directed) {
   std::ifstream infile(input_file.str());
   if (!infile.is_open()) {
     throw std::runtime_error{"Could not read file: " + input_file.str()};
@@ -69,9 +69,9 @@ void Init_ext() {
         return self(source, destination, time);
       })
     .define_method(
-      "fit_predict",
+      "update_file",
       [](MIDAS::NormalCore& self, Rice::String input, bool directed) {
-        return load_file(self, input, directed);
+        return update_file(self, input, directed);
       });
 
   Rice::define_class_under<MIDAS::RelationalCore>(rb_mMidas, "RelationalCore")
@@ -82,9 +82,9 @@ void Init_ext() {
         return self(source, destination, time);
       })
     .define_method(
-      "fit_predict",
+      "update_file",
       [](MIDAS::RelationalCore& self, Rice::String input, bool directed) {
-        return load_file(self, input, directed);
+        return update_file(self, input, directed);
       });
 
   Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
@@ -95,8 +95,8 @@ void Init_ext() {
         return self(source, destination, time);
       })
     .define_method(
-      "fit_predict",
+      "update_file",
       [](MIDAS::FilteringCore& self, Rice::String input, bool directed) {
-        return load_file(self, input, directed);
+        return update_file(self, input, directed);
       });
 }

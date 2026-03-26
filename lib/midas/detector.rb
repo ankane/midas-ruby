@@ -25,7 +25,7 @@ module Midas
     def partial_fit_predict(x, directed: true)
       if x.is_a?(String)
         @core ||= core
-        @core.fit_predict(x, directed)
+        @core.update_file(x, directed)
       else
         x = x.to_a
         result = []
