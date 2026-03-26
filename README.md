@@ -59,7 +59,7 @@ midas.fit_predict("data.csv")
 
 ## Resources
 
-- [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf)
+- [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464)
 
 ## History
 
