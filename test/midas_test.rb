@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 class MidasTest < Minitest::Test
   def test_array
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict(data)
 
     assert_equal [10000], scores.shape
@@ -20,7 +20,7 @@ class MidasTest < Minitest::Test
   end
 
   def test_numo_array
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict(Numo::Int32.cast(data))
 
     assert_equal [10000], scores.shape
@@ -38,7 +38,7 @@ class MidasTest < Minitest::Test
   end
 
   def test_threshold
-    midas = Midas.new(buckets: 1024, threshold: 1e3)
+    midas = Midas::Detector.new(buckets: 1024, threshold: 1e3)
     scores = midas.fit_predict(data)
 
     assert_equal [10000], scores.shape
@@ -49,7 +49,7 @@ class MidasTest < Minitest::Test
   end
 
   def test_no_relations
-    midas = Midas.new(buckets: 1024, relations: false)
+    midas = Midas::Detector.new(buckets: 1024, relations: false)
     scores = midas.fit_predict(data)
 
     assert_equal [10000], scores.shape
@@ -67,7 +67,7 @@ class MidasTest < Minitest::Test
   end
 
   def test_undirected
-    midas = Midas.new(directed: false)
+    midas = Midas::Detector.new(directed: false)
     scores = midas.fit_predict(data)
 
     assert_equal [20000], scores.shape
@@ -76,7 +76,7 @@ class MidasTest < Minitest::Test
   end
 
   def test_file
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     scores = midas.fit_predict("vendor/MIDAS/data/DARPA/darpa_processed.csv")
 
     assert_equal [4554344], scores.shape
@@ -88,24 +88,24 @@ class MidasTest < Minitest::Test
   end
 
   def test_empty
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     assert_empty midas.fit_predict([])
   end
 
   def test_fit_predict
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     assert_elements_in_delta [0, 0, 1, 2, 2], midas.fit_predict(data.first(5))
     assert_elements_in_delta [0, 0, 1, 2, 2], midas.fit_predict(data.first(5))
   end
 
   def test_partial_fit_predict
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     assert_elements_in_delta [0, 0, 1, 2, 2], midas.partial_fit_predict(data.first(5))
     assert_elements_in_delta [0, 0, 0.333333, 1, 4], midas.partial_fit_predict(data.first(5))
   end
 
   def test_update
-    midas = Midas.new(buckets: 1024)
+    midas = Midas::Detector.new(buckets: 1024)
     assert_elements_in_delta [0, 0, 1, 2, 2], data.first(5).map { |v| midas.update(*v) }
     assert_elements_in_delta [0, 0, 0.333333, 1, 4], data.first(5).map { |v| midas.update(*v) }
   end

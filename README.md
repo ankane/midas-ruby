@@ -28,7 +28,7 @@ data = [
 Get anomaly scores
 
 ```ruby
-midas = Midas.new
+midas = Midas::Detector.new
 scores = midas.fit_predict(data)
 ```
 
@@ -39,7 +39,7 @@ Higher scores are more anomalous. There is [not currently](https://github.com/St
 Pass parameters - default values below
 
 ```ruby
-Midas.new(
+Midas::Detector.new(
   rows: 2,           # number of hash functions
   buckets: 769,      # number of buckets
   alpha: 0.5,        # temporal decay factor
