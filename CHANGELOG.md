@@ -1,3 +1,7 @@
+## 0.5.2 (unreleased)
+
+- Added `update` method
+
 ## 0.5.1 (2026-02-07)
 
 - Added `partial_fit_predict` method

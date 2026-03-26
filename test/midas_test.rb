@@ -104,6 +104,12 @@ class MidasTest < Minitest::Test
     assert_elements_in_delta [0, 0, 0.333333, 1, 4], midas.partial_fit_predict(data.first(5))
   end
 
+  def test_update
+    midas = Midas.new(buckets: 1024)
+    assert_elements_in_delta [0, 0, 1, 2, 2], data.first(5).map { |v| midas.update(*v) }
+    assert_elements_in_delta [0, 0, 0.333333, 1, 4], data.first(5).map { |v| midas.update(*v) }
+  end
+
   private
 
   def data
