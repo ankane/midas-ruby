@@ -17,27 +17,6 @@
 #include <rice/rice.hpp>
 #include <rice/stl.hpp>
 
-template<typename T>
-Rice::Array load_array(T& midas, Rice::Array input, bool directed) {
-  Rice::Array result(input.size());
-
-  for (auto r : input) {
-    Rice::Array row(r);
-    if (row.size() != 3) {
-      throw Rice::Exception(rb_eArgError, "Bad shape");
-    }
-    int s = Rice::detail::From_Ruby<int>().convert(row[0].value());
-    int d = Rice::detail::From_Ruby<int>().convert(row[1].value());
-    int t = Rice::detail::From_Ruby<int>().convert(row[2].value());
-    result.push(midas(s, d, t), false);
-    if (!directed) {
-      result.push(midas(d, s, t), false);
-    }
-  }
-
-  return result;
-}
-
 // load_data from main.cpp
 // modified to throw std::runtime_error when cannot find file
 // instead of exiting
@@ -70,15 +49,6 @@ Rice::Array load_file(T& midas, Rice::String input_file, bool directed) {
   return result;
 }
 
-template<typename T>
-Rice::Array fit_predict(T& midas, Rice::Object input, bool directed) {
-  if (input.is_a(rb_cString)) {
-    return load_file(midas, input, directed);
-  } else {
-    return load_array(midas, input.call("to_a"), directed);
-  }
-}
-
 extern "C"
 void Init_ext() {
   auto rb_mMidas = Rice::define_module("Midas");
@@ -100,8 +70,8 @@ void Init_ext() {
       })
     .define_method(
       "fit_predict",
-      [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
-        return fit_predict(self, input, directed);
+      [](MIDAS::NormalCore& self, Rice::String input, bool directed) {
+        return load_file(self, input, directed);
       });
 
   Rice::define_class_under<MIDAS::RelationalCore>(rb_mMidas, "RelationalCore")
@@ -113,8 +83,8 @@ void Init_ext() {
       })
     .define_method(
       "fit_predict",
-      [](MIDAS::RelationalCore& self, Rice::Object input, bool directed) {
-        return fit_predict(self, input, directed);
+      [](MIDAS::RelationalCore& self, Rice::String input, bool directed) {
+        return load_file(self, input, directed);
       });
 
   Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
@@ -126,7 +96,7 @@ void Init_ext() {
       })
     .define_method(
       "fit_predict",
-      [](MIDAS::FilteringCore& self, Rice::Object input, bool directed) {
-        return fit_predict(self, input, directed);
+      [](MIDAS::FilteringCore& self, Rice::String input, bool directed) {
+        return load_file(self, input, directed);
       });
 }

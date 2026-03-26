@@ -23,8 +23,21 @@ module Midas
 
     # TODO better name
     def partial_fit_predict(x, directed: true)
-      @core ||= core
-      @core.fit_predict(x, directed)
+      if x.is_a?(String)
+        @core ||= core
+        @core.fit_predict(x, directed)
+      else
+        x = x.to_a
+        result = []
+        x.each do |v|
+          if !v.is_a?(Array) || v.size != 3
+            raise ArgumentError, "Bad shape"
+          end
+          result << update(v[0], v[1], v[2])
+          result << update(v[1], v[0], v[2]) if !directed
+        end
+        result
+      end
     end
 
     def update(source, destination, time)
