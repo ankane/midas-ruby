@@ -29,8 +29,10 @@ module Midas
       @core.fit_predict(x, @directed)
     end
 
+    # TODO decide how to handle @directed
     def update(source, destination, time)
-      partial_fit_predict([[source, destination, time.to_i]])[0]
+      @core ||= core
+      @core.update(source, destination, time.to_i)
     end
 
     private

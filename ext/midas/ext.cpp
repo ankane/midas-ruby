@@ -94,6 +94,11 @@ void Init_ext() {
   Rice::define_class_under<MIDAS::NormalCore>(rb_mMidas, "NormalCore")
     .define_constructor(Rice::Constructor<MIDAS::NormalCore, int, int>())
     .define_method(
+      "update",
+      [](MIDAS::NormalCore& self, int source, int destination, int time) {
+        return self(source, destination, time);
+      })
+    .define_method(
       "fit_predict",
       [](MIDAS::NormalCore& self, Rice::Object input, bool directed) {
         return fit_predict(self, input, directed);
@@ -102,6 +107,11 @@ void Init_ext() {
   Rice::define_class_under<MIDAS::RelationalCore>(rb_mMidas, "RelationalCore")
     .define_constructor(Rice::Constructor<MIDAS::RelationalCore, int, int, float>())
     .define_method(
+      "update",
+      [](MIDAS::RelationalCore& self, int source, int destination, int time) {
+        return self(source, destination, time);
+      })
+    .define_method(
       "fit_predict",
       [](MIDAS::RelationalCore& self, Rice::Object input, bool directed) {
         return fit_predict(self, input, directed);
@@ -109,6 +119,11 @@ void Init_ext() {
 
   Rice::define_class_under<MIDAS::FilteringCore>(rb_mMidas, "FilteringCore")
     .define_constructor(Rice::Constructor<MIDAS::FilteringCore, int, int, float, float>())
+    .define_method(
+      "update",
+      [](MIDAS::FilteringCore& self, int source, int destination, int time) {
+        return self(source, destination, time);
+      })
     .define_method(
       "fit_predict",
       [](MIDAS::FilteringCore& self, Rice::Object input, bool directed) {
