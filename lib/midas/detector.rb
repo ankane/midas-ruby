@@ -30,7 +30,7 @@ module Midas
     end
 
     def update(source, destination, time)
-      partial_fit_predict([[source, destination, time.to_i]])
+      partial_fit_predict([[source, destination, time.to_i]])[0]
     end
 
     private
