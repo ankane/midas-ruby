@@ -1,5 +1,5 @@
 // stdlib
-#include <cstdio>
+#include <cstddef>
 #include <cstdlib>
 #include <fstream>
 #include <string>
@@ -26,14 +26,19 @@ Rice::Array update_file(T& midas, Rice::String input_file, bool directed) {
   std::string line;
 
   while (std::getline(infile, line)) {
-    int s;
-    int d;
-    int t;
-
-    // TODO replace
-    if (std::sscanf(line.c_str(), "%d,%d,%d", &s, &d, &t) != 3) {
-      break;
+    size_t n = line.find(',');
+    if (n == std::string::npos) {
+      throw std::runtime_error{"Invalid line"};
     }
+
+    size_t n2 = line.find(',', n + 1);
+    if (n2 == std::string::npos) {
+      throw std::runtime_error{"Invalid line"};
+    }
+
+    int s = std::stoi(line.substr(0, n));
+    int d = std::stoi(line.substr(n + 1, n2 - n - 1));
+    int t = std::stoi(line.substr(n2 + 1));
 
     result.push(midas(s, d, t), false);
     if (!directed) {
