@@ -14,25 +14,19 @@ gem "midas-edge"
 
 ## Getting Started
 
-Prep your data in the format `[source, destination, time]` (all integers) and sorted by time (ascending)
-
-```ruby
-data = [
-  [2, 3, 1],
-  [3, 4, 2],
-  [5, 9, 2],
-  [2, 3, 3]
-]
-```
-
-Get anomaly scores
+Create a detector
 
 ```ruby
 midas = Midas::Detector.new
-scores = midas.fit_predict(data)
 ```
 
-Higher scores are more anomalous. There is [not currently](https://github.com/Stream-AD/MIDAS/issues/4) a defined threshold for anomalies.
+Update with an event
+
+```ruby
+score = midas.update(source_id, destination_id, time)
+```
+
+IDs should be integers and events should be sorted by time (ascending). Higher scores are more anomalous. There is [not currently](https://github.com/Stream-AD/MIDAS/issues/4) a defined threshold for anomalies.
 
 ## Parameters
 
@@ -54,7 +48,7 @@ Midas::Detector.new(
 For large datasets, read data directly from files
 
 ```ruby
-midas.fit_predict("data.csv")
+midas.batch_update("data.csv")
 ```
 
 ## Resources
