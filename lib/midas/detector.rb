@@ -16,9 +16,9 @@ module Midas
       @seed = seed
     end
 
-    def fit_predict(x, directed: true)
-      @core = nil # reset core
-      batch_update(x, directed:)
+    def update(source, destination, time)
+      @core ||= core
+      @core.update(source, destination, time.to_i)
     end
 
     def batch_update(x, directed: true)
@@ -38,11 +38,14 @@ module Midas
         result
       end
     end
+
+    # legacy
     alias_method :partial_fit_predict, :batch_update
 
-    def update(source, destination, time)
-      @core ||= core
-      @core.update(source, destination, time.to_i)
+    # legacy
+    def fit_predict(x, directed: true)
+      @core = nil # reset core
+      batch_update(x, directed:)
     end
 
     private
