@@ -26,7 +26,7 @@ Update with an event
 score = midas.update(source_id, destination_id, time)
 ```
 
-IDs should be integers and events should be sorted by time (ascending). Higher scores are more anomalous. There is [not currently](https://github.com/Stream-AD/MIDAS/issues/4) a defined threshold for anomalies.
+IDs should be integers and events should be in order by time (ascending). Higher scores are more anomalous. There is [not currently](https://github.com/Stream-AD/MIDAS/issues/4) a defined threshold for anomalies.
 
 ## Parameters
 
