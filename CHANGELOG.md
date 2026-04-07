@@ -1,4 +1,4 @@
-## 0.6.0 (unreleased)
+## 0.6.0 (2026-04-07)
 
 - Added `update` and `batch_update` methods
 - Moved `directed` option to `fit_predict` and `partial_fit_predict` methods
