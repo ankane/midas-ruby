@@ -110,6 +110,12 @@ class MidasTest < Minitest::Test
     assert_elements_in_delta [0, 0, 0.333333, 1, 4], data.first(5).map { |v| midas.update(*v) }
   end
 
+  def test_batch_update
+    midas = Midas::Detector.new(buckets: 1024)
+    assert_elements_in_delta [0, 0, 1, 2, 2], midas.batch_update(data.first(5))
+    assert_elements_in_delta [0, 0, 0.333333, 1, 4], midas.batch_update(data.first(5))
+  end
+
   private
 
   def data

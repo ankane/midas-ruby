@@ -18,11 +18,10 @@ module Midas
 
     def fit_predict(x, directed: true)
       @core = nil # reset core
-      partial_fit_predict(x, directed:)
+      batch_update(x, directed:)
     end
 
-    # TODO better name
-    def partial_fit_predict(x, directed: true)
+    def batch_update(x, directed: true)
       if x.is_a?(String)
         @core ||= core
         @core.update_file(x, directed)
@@ -39,6 +38,7 @@ module Midas
         result
       end
     end
+    alias_method :partial_fit_predict, :batch_update
 
     def update(source, destination, time)
       @core ||= core

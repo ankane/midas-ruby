@@ -1,6 +1,6 @@
 ## 0.6.0 (unreleased)
 
-- Added `update` method
+- Added `update` and `batch_update` methods
 - Moved `directed` option to `fit_predict` and `partial_fit_predict` methods
 - Removed dependency on `numo-narray`
 - Dropped support for Ruby < 3.3
